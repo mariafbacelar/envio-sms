@@ -56,11 +56,18 @@ async function enviarSms(tipo = "NORMAL") {
 }
 
 // 🧠 Loop inteligente (sem cron)
-setInterval(async () => {
-    const agora = new Date();
+setInterval(async () => 
+    {
+const agora = new Date().toLocaleString("pt-BR", {
+    timeZone: "America/Sao_Paulo"
+});
 
-    const hora = agora.getHours();
-    const minuto = agora.getMinutes();
+const data = new Date(agora);
+
+const hora = data.getHours();
+const minuto = data.getMinutes();
+
+console.log("Hora Brasil:", hora, "Minuto:", minuto);
 
     const chaveEnvio = `${hora}:${minuto}`;
     const chaveTeste = `${hora}:${minuto}`;
@@ -79,7 +86,7 @@ setInterval(async () => {
     }
 
     // 🧪 TESTE: 20:15 (apenas uma vez)
-    if (hora === 20 && minuto === 15) {
+    if (hora === 20 && minuto === 35) {
         if (ultimoTeste !== chaveTeste) {
             ultimoTeste = chaveTeste;
             await enviarSms("TESTE");
