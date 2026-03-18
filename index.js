@@ -58,14 +58,22 @@ async function enviarSms(tipo = "NORMAL") {
 // 🧠 Loop inteligente (sem cron)
 setInterval(async () => 
     {
-const agora = new Date().toLocaleString("pt-BR", {
-    timeZone: "America/Sao_Paulo"
-});
+const agora = new Date();
 
-const data = new Date(agora);
+const hora = Number(
+    agora.toLocaleString("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+        hour: "2-digit",
+        hour12: false
+    })
+);
 
-const hora = data.getHours();
-const minuto = data.getMinutes();
+const minuto = Number(
+    agora.toLocaleString("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+        minute: "2-digit"
+    })
+);
 
 console.log("Hora Brasil:", hora, "Minuto:", minuto);
 
