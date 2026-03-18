@@ -85,7 +85,7 @@ console.log("Hora Brasil:", hora, "Minuto:", minuto);
         }
     }
 
-    // 🧪 TESTE: 20:15 (apenas uma vez)
+    // 🧪 TESTE: 20:35 (apenas uma vez)
     if (hora === 20 && minuto === 35) {
         if (ultimoTeste !== chaveTeste) {
             ultimoTeste = chaveTeste;
