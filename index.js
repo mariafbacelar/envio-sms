@@ -13,15 +13,22 @@ let ultimoTeste = null;
 function obterDataHoraFormatada() {
     const agora = new Date();
 
-    const dia = String(agora.getDate()).padStart(2, '0');
-    const mes = String(agora.getMonth() + 1).padStart(2, '0');
-    const ano = agora.getFullYear();
+    const options = {
+        timeZone: "America/Sao_Paulo",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+    };
 
-    const hora = String(agora.getHours()).padStart(2, '0');
-    const minuto = String(agora.getMinutes()).padStart(2, '0');
-    const segundo = String(agora.getSeconds()).padStart(2, '0');
+    const partes = new Intl.DateTimeFormat("pt-BR", options).formatToParts(agora);
 
-    return `${dia}/${mes}/${ano}-${hora}:${minuto}:${segundo}`;
+    const get = (type) => partes.find(p => p.type === type).value;
+
+    return `${get("day")}/${get("month")}/${get("year")}-${get("hour")}:${get("minute")}:${get("second")}`;
 }
 
 // Função de envio
@@ -102,6 +109,16 @@ console.log("Hora Brasil:", hora, "Minuto:", minuto);
     }
 
 }, 60 * 1000); // roda a cada 1 minuto
+
+app.get('/logs', async (req, res) => {
+    try {
+        const data = await fs.readFile('historico_envios.txt', 'utf-8');
+        res.send(`<pre>${data}</pre>`);
+    } catch (err) {
+        res.send("Sem logs ainda");
+    }
+});
+
 
 // Endpoint manual (opcional)
 app.get('/enviar', async (req, res) => {
